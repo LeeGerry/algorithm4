@@ -1,6 +1,8 @@
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
-
+/**
+ * Demo2
+ */
 public class RandomSeq {
 	public static void main(String[] args) {
 		int n = Integer.parseInt(args[0]);
