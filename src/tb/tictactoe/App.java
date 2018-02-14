@@ -20,6 +20,7 @@ public class App {
 				if(!boo){
 					System.out.println("illegal");
 					continue;
+					
 				}
 			}
 			int win = b.checkWin();
