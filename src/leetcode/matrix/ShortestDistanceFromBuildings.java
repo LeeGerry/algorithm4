@@ -22,7 +22,7 @@ import java.util.Queue;
 		buildNum表示总共的城市数目
 		dist[i][j]表示[i][j]处的0点到所有城市的距离和，每次都在已有的基础上进行累加。
 		nums[i][j]表示[i][j]处的0点到所有城市的城市个数，每次多一个城市并且能到该城市，就自增
-		BFS以后，从dist数组中找出最小值（满足是0点，距离!=0,该点到达城市的数目==buildNum）返回
+		BFS以后，从dist数组中找出最小值（满足是0点，距离!=0,该点到达城市的数目==buildNum）
  */
 public class ShortestDistanceFromBuildings {
 	public int shortestDistance(int[][] grid) {
