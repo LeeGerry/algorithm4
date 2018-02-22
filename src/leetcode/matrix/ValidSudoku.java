@@ -3,9 +3,43 @@ package leetcode.matrix;
 import java.util.HashSet;
 
 /**
+ * Determine if a Sudoku is valid.
+The Sudoku board could be partially filled, where empty cells are filled with the character '.'.
  * https://leetcode.com/problems/valid-sudoku/description/
  * https://www.youtube.com/watch?v=4-SF0-p98NM&t=3s
- *
+ * 
+ * 	每一行必须是数字1~9且不重复
+	每一列必须是数字1~9且不重复
+	每一个小九宫格（互不交叉，总共九个小九宫格）必须是数字1~9且不重复
+
+
+依次检查每行，每列，每个子九宫格是否出现重复元素，如果出现返回false，否则返回true.
+难点在于表示第i个九宫格每个格点的坐标。
+
+观察行号规律：
+第0个九宫格：000111222; 第1个九宫格：000111222; 第2个九宫格：000111222;
+第3个九宫格：333444555; 第4个九宫格：333444555; 第5个九宫格：333444555;
+第6个九宫格：666777888; 第7个九宫格：666777888; 第8个九宫格：666777888;
+
+可见对于每三个九宫格行号增3；对于单个九宫格，每三个格点行号增1。
+因此第i个九宫格的第j个格点的行号可表示为i/3*3+j/3（每个小九宫格j都是从0~9递增）
+
+观察列号规律：
+第0个九宫格：012012012; 第1个九宫格：345345345; 第2个九宫格：678678678;
+第3个九宫格：012012012; 第4个九宫格：345345345; 第5个九宫格：678678678;
+第6个九宫格：012012012; 第7个九宫格：345345345; 第8个九宫格：678678678;
+
+可见对于下个九宫格列号增3，循环周期为3；对于单个九宫格，每个格点行号增1，周期也为3。
+周期的数学表示就是取模运算mod。
+因此第i个九宫格的第j个格点的列号可表示为i%3*3+j%3（每个小九宫格j都是从0~9递增）
+
+
+细节分析题
+（1）检查行
+（2）检查列
+（3）检查9个子宫格
+使用HashSet
+
  */
 public class ValidSudoku {
 	// Time: O(m*n)
@@ -21,8 +55,9 @@ public class ValidSudoku {
 					return false;
 				int rowIndex = 3 * (i / 3);
 				int colIndex = 3 * (i % 3);
-				if (board[rowIndex + j / 3][colIndex + j % 3] != '.'
-						&& !cube.add(board[rowIndex + j / 3][colIndex + j % 3]))
+				int r = rowIndex + j / 3;
+				int c = colIndex + j % 3;
+				if (board[r][c] != '.' && !cube.add(board[r][c]))
 					return false;
 			}
 		}
@@ -63,5 +98,19 @@ public class ValidSudoku {
 			}
 		}
 		return true;
+	}
+	public static void main(String[] args) {
+		char[][] arr = {
+				{'4','6','3','7','2','8','9','5','1'},
+				{'2','5','9','4','6','1','7','3','8'},
+				{'7','8','1','3','5','9','6','4','2'},
+				{'5','3','2','1','9','7','4','8','6'},
+				{'9','1','4','6','8','2','5','7','3'},
+				{'6','7','8','5','4','3','1','2','9'},
+				{'8','2','6','9','7','5','3','1','4'},
+				{'1','4','7','2','3','6','8','9','5'},
+				{'3','9','5','8','1','4','2','6','7'}
+		};
+		System.out.println(new ValidSudoku().isValidSudoku1(arr));
 	}
 }

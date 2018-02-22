@@ -1,31 +1,19 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-class Student{
-	int age;
-	String name;
-	
-}
 public class ComTest {
+	
+	public static int search(Object[] a, Object t){
+		return -1;
+	}
+	public static int search2(Comparable[] a, Comparable t){
+		a[0].compareTo(t);
+		return -1;
+	}
 	public static void main(String[] args) {
-		ArrayList<Integer> list = new ArrayList<>();
-		list.add(3);list.add(1);list.add(0);list.add(9);
-		System.out.println(list.toString());
-		Collections.sort(list, new Comparator<Integer>() {
-			@Override
-			public int compare(Integer o1, Integer o2) {
-				return o2 - o1;
-			}
-		});
+		Object[] a = {"abc",'c',33.3};
+		Comparable[] b = {"abc",'c',33.3,new Integer(3)};
 		
-		ArrayList<Student> list1 = new ArrayList<>();
-		Collections.sort(list1, new Comparator<Student>() {
-			@Override
-			public int compare(Student o1, Student o2) {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-		});
-		System.out.println(list.toString());
+		//这个编译通过了，因为参数都很对。但是方法体中指明了要用compareTo方法，
+		//这时候可能有不一样的对象，大家都有compareto方法，这时候比较的时候不同对象在运行的时候不知道如何比较，就产生了如下错误
+		//比如这个33.33是浮点型，就不知道如何跟"abc"字符串型比较
+		search2(b, 33.33);
 	}
 }
